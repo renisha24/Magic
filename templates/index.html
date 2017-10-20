@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+            		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+  $(function(){
+    $("input[type='submit']").click(function(){
+        var $fileUpload = $("input[type='file']");
+        if (parseInt($fileUpload.get(0).files.length)>10){
+         alert("You can only upload a maximum of 10 files");
+         return false;
+        }
+    });
+});
+</script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
+          rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h3 class="text-muted">Magic Reimbersment</h3>
+        <h2 class="text-muted">Reimbersment Made Easy</h2>
+      </div>
+      <hr/>
+
+        <div>
+          <form action="upload" method="post" enctype="multipart/form-data">
+          <input type="file" name="file[]" multiple=""class="span3"><br /><br />
+          <input type="submit" value="Upload">
+          </form>
+        </div>
+
+        <form action="/process" method="post">
+            <button  type="submit" name="Process" value="Process">Process</button>
+</form>
+
+
+     {% if filenames %}
+            <div>
+            This is a list of the files you just uploaded
+            <ul>
+            {% for file in filenames %}
+                <li>{{file}}</a></li>
+            {% endfor %}
+            </ul>
+            </div>
+        {% endif %}
+
+      {%if processed %}
+      <div>
+        <h1> All Uploaded files have been processed </h1>
+      </div>
+        {% endif %}
+
+              {%if error %}
+      <div>
+        <h1> Oops something went Wrong Try again </h1>
+      </div>
+        {% endif %}
+    </div>
+  </body>
+</html>
